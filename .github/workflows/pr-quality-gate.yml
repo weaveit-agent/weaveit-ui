@@ -1,9 +1,9 @@
 name: 🛑 Quality Gate (PR -> Main)
 
 on:
-  pull_request:
+  push:
     branches:
-      - main  # 🟢 Only runs when merging to Production
+      - dev  # 🟢 Only runs when merging to Production
 
 jobs:
   ephemeral-test:
