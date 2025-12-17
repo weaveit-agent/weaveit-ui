@@ -132,7 +132,7 @@ jobs:
       # --------------------------------------------------------
       - name: Push Docker Image
         # 🟢 SAFETY: Only push if we are on the master branch
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/dev'
         run: |
           docker push $FULL_IMAGE_NAME
           echo "✅ Pushed $FULL_IMAGE_NAME"

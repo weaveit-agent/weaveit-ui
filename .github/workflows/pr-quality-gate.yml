@@ -68,4 +68,4 @@ jobs:
       # 6. Teardown
       - name: 🧹 Cleanup
         if: always()
-        run: docker compose -f docker-compose.test.yml down
+        run: docker compose -f docker-compose.yml down
