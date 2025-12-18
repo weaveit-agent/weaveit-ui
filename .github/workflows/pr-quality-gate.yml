@@ -1,9 +1,9 @@
 name: 🛑 Quality Gate (PR -> Main)
 
 on:
-  push:
+  pull_request:
     branches:
-      - dev  # 🟢 Only runs when merging to Production
+      - main  # 🟢 Only runs when merging to Production
 
 jobs:
   ephemeral-test:
@@ -80,7 +80,7 @@ jobs:
         with:
           name: ZAP-Security-Report
           path: zap_report.html
-          
+
       # 6. Teardown
       - name: 🧹 Cleanup
         if: always()
