@@ -1,0 +1,47 @@
+name: 🚀 Production Release
+
+on:
+  push:
+    branches:
+      - main  # 🟢 Only runs on merge to Main
+
+env:
+  # 🟢 Naming: weaveit-ui-prod
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/weaveit-ui-prod
+
+jobs:
+  build-and-push:
+    name: 📦 Build & Push Prod Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push Production Image
+        run: |
+          # Ensure lowercase owner name for Docker compatibility
+          REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+          FULL_IMAGE="ghcr.io/${REPO_OWNER}/weaveit-ui-prod:latest"
+          
+          echo "🔨 Building Frontend Production Image: $FULL_IMAGE"
+          
+          # Build Fresh Image
+          # Note: If you need to bake in the API URL for Docker, you can add:
+          # --build-arg NEXT_PUBLIC_API_URL=https://api.weaveit.app
+          docker build --no-cache -t $FULL_IMAGE .
+          docker push $FULL_IMAGE
+          
+          echo "✅ Frontend Registry Image Updated!"
