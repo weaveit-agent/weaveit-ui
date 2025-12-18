@@ -63,6 +63,7 @@ jobs:
           rules_file_name: '.zap/rules.tsv' # Optional: You can ignore specific false positives here later
           cmd_options: '-a' # '-a' includes alpha rules (optional)
           allow_issue_writing: false # Set to true if you want ZAP to create GitHub Issues for bugs
+          artifact_name: 'zap-scan-report' # 🟢 FIX: Explicitly valid name (dashes instead of underscores)
         continue-on-error: true # 🟢 Recommendation: Don't block merge on ZAP alerts initially, just log them.
 
       # 6. Teardown
